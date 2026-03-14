@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> loving homes </title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #fdfaf6; color: #333; direction: rtl; }
+
+    /* NAV */
+    nav {
+      background: #fff;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-size: 1.7rem; font-weight: 800; color: #e07b39; display: flex; align-items: center; gap: 8px; }
+    .logo span { color: #333; }
+    nav ul { list-style: none; display: flex; gap: 30px; }
+    nav ul li a { text-decoration: none; color: #555; font-size: 1rem; font-weight: 500; transition: color .2s; }
+    nav ul li a:hover { color: #e07b39; }
+    .btn-book {
+      background: #e07b39; color: #fff; border: none;
+      padding: 10px 24px; border-radius: 30px; font-size: 1rem;
+      cursor: pointer; font-weight: 700; transition: background .2s;
+    }
+    .btn-book:hover { background: #c4622a; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #fff8f2 0%, #fde8d4 100%);
+      padding: 80px 40px 60px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 3rem; color: #2d2d2d; font-weight: 900; line-height: 1.2; }
+    .hero h1 span { color: #e07b39; }
+    .hero p { font-size: 1.2rem; color: #666; margin: 18px auto 30px; max-width: 600px; line-height: 1.8; }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; }
+    .btn-primary { background: #e07b39; color: white; padding: 14px 32px; border-radius: 30px; font-size: 1.1rem; font-weight: 700; border: none; cursor: pointer; transition: background .2s; }
+    .btn-primary:hover { background: #c4622a; }
+    .btn-secondary { background: transparent; color: #e07b39; padding: 14px 32px; border-radius: 30px; font-size: 1.1rem; font-weight: 700; border: 2px solid #e07b39; cursor: pointer; transition: all .2s; }
+    .btn-secondary:hover { background: #e07b39; color: white; }
+    .hero-emojis { font-size: 3.5rem; margin-bottom: 20px; }
+
+    /* STATS */
+    .stats {
+      display: flex; justify-content: center; gap: 60px;
+      padding: 30px 40px; background: #e07b39;
+    }
+    .stat { text-align: center; color: white; }
+    .stat .num { font-size: 2rem; font-weight: 900; }
+    .stat .label { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+
+    /* SECTION TITLE */
+    .section { padding: 70px 40px; max-width: 1100px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-size: 2.2rem; font-weight: 800; color: #2d2d2d; }
+    .section-title p { color: #777; font-size: 1.05rem; margin-top: 10px; }
+    .section-title .line { width: 60px; height: 4px; background: #e07b39; margin: 12px auto 0; border-radius: 4px; }
+
+    /* AMENITIES */
+    .amenities-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+    .amenity-card {
+      background: #fff; border-radius: 16px;
+      padding: 28px 20px; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      transition: transform .2s;
+    }
+    .amenity-card:hover { transform: translateY(-5px); }
+    .amenity-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .amenity-card h3 { font-size: 1rem; font-weight: 700; color: #333; }
+    .amenity-card p { font-size: 0.88rem; color: #888; margin-top: 6px; }
+
+    /* PACKAGES */
+    .packages-bg { background: #fff8f2; padding: 70px 40px; }
+    .packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; }
+    .package-card {
+      background: #fff; border-radius: 20px;
+      padding: 36px 28px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+      position: relative; transition: transform .2s;
+      border: 2px solid transparent;
+    }
+    .package-card:hover { transform: translateY(-6px); }
+    .package-card.featured { border-color: #e07b39; }
+    .badge {
+      position: absolute; top: -14px; right: 28px;
+      background: #e07b39; color: white;
+      padding: 5px 18px; border-radius: 20px; font-size: 0.82rem; font-weight: 700;
+    }
+    .pkg-icon { font-size: 2.8rem; margin-bottom: 12px; }
+    .package-card h3 { font-size: 1.5rem; font-weight: 800; color: #2d2d2d; }
+    .pkg-subtitle { color: #888; font-size: 0.9rem; margin: 4px 0 20px; }
+    .pkg-features { list-style: none; margin-bottom: 28px; }
+    .pkg-features li { padding: 8px 0; color: #555; font-size: 0.95rem; border-bottom: 1px solid #f3f3f3; display: flex; align-items: center; gap: 8px; }
+    .pkg-features li .check { color: #4caf50; font-size: 1rem; }
+    .pkg-features li .dash { color: #aaa; }
+    .pkg-btn { width: 100%; padding: 13px; border-radius: 30px; font-size: 1rem; font-weight: 700; border: none; cursor: pointer; transition: all .2s; }
+    .pkg-btn.orange { background: #e07b39; color: white; }
+    .pkg-btn.orange:hover { background: #c4622a; }
+    .pkg-btn.outline { background: transparent; color: #e07b39; border: 2px solid #e07b39; }
+    .pkg-btn.outline:hover { background: #e07b39; color: white; }
+    .pkg-walks { font-size: 0.85rem; color: #e07b39; font-weight: 700; margin-bottom: 4px; }
+
+    /* SPECIAL NOTE */
+    .special-note {
+      background: #fff3e8; border-right: 5px solid #e07b39;
+      border-radius: 12px; padding: 20px 24px;
+      max-width: 1100px; margin: 0 auto 30px;
+      font-size: 0.97rem; color: #555; line-height: 1.7;
+    }
+
+    /* HOW IT WORKS */
+    .steps { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+    .step { text-align: center; max-width: 200px; }
+    .step-num { width: 52px; height: 52px; background: #e07b39; color: white; font-size: 1.4rem; font-weight: 800; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .step h4 { font-size: 1.05rem; font-weight: 700; color: #2d2d2d; }
+    .step p { font-size: 0.88rem; color: #888; margin-top: 6px; }
+    .step-arrow { font-size: 1.8rem; color: #e07b39; align-self: center; margin-top: -28px; }
+
+    /* CONTACT */
+    .contact-bg { background: #2d2d2d; padding: 70px 40px; text-align: center; color: white; }
+    .contact-bg h2 { font-size: 2rem; font-weight: 800; }
+    .contact-bg p { color: #bbb; margin: 12px 0 28px; font-size: 1.05rem; }
+    .contact-info { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 30px; }
+    .contact-item { display: flex; align-items: center; gap: 10px; font-size: 1rem; color: #ddd; }
+    .contact-item .ci { font-size: 1.4rem; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; padding: 24px 40px; text-align: center; color: #777; font-size: 0.9rem; }
+    footer span { color: #e07b39; }
+
+    /* REVIEWS SECTION */
+    .reviews-bg { background: #fdfaf6; padding: 70px 40px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto 50px; }
+    .review-card {
+      background: #fff; border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform .2s;
+      border: 1.5px solid #f3ece4;
+    }
+    .review-card:hover { transform: translateY(-4px); }
+    .review-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .review-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #e07b39, #f5a96b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 800; color: white; flex-shrink: 0;
+    }
+    .review-info h4 { font-size: 1rem; font-weight: 700; color: #2d2d2d; margin-bottom: 2px; }
+    .review-info .review-pet { font-size: 0.82rem; color: #e07b39; font-weight: 600; }
+    .review-stars { color: #f5a623; font-size: 1rem; margin-bottom: 10px; }
+    .review-stars span { color: #ccc; }
+    .review-text { font-size: 0.93rem; color: #666; line-height: 1.75; }
+    .review-date { font-size: 0.78rem; color: #bbb; margin-top: 12px; }
+
+    /* SUMMARY BAR */
+    .rating-summary {
+      max-width: 1100px; margin: 0 auto 40px;
+      background: #fff; border-radius: 20px;
+      padding: 30px 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
+    }
+    .rating-big { text-align: center; flex-shrink: 0; }
+    .rating-big .score { font-size: 4rem; font-weight: 900; color: #e07b39; line-height: 1; }
+    .rating-big .total-stars { color: #f5a623; font-size: 1.3rem; }
+    .rating-big .count { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
+    .rating-bars { flex: 1; min-width: 200px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .bar-label { font-size: 0.82rem; color: #888; width: 40px; text-align: right; flex-shrink: 0; }
+    .bar-track { flex: 1; background: #f3f3f3; border-radius: 10px; height: 10px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #e07b39, #f5a96b); transition: width 1s ease; }
+    .bar-pct { font-size: 0.8rem; color: #aaa; width: 34px; flex-shrink: 0; }
+
+    /* ADD REVIEW FORM */
+    .add-review-box {
+      max-width: 700px; margin: 0 auto;
+      background: #fff; border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .add-review-box h3 { font-size: 1.4rem; font-weight: 800; color: #2d2d2d; margin-bottom: 6px; }
+    .add-review-box .sub { font-size: 0.92rem; color: #999; margin-bottom: 24px; }
+    .star-picker { display: flex; gap: 8px; margin-bottom: 20px; flex-direction: row-reverse; justify-content: flex-end; }
+    .star-picker input { display: none; }
+    .star-picker label { font-size: 2rem; cursor: pointer; color: #ddd; transition: color .15s; }
+    .star-picker input:checked ~ label,
+    .star-picker label:hover,
+    .star-picker label:hover ~ label { color: #f5a623; }
+    .review-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .review-form-group { margin-bottom: 14px; }
+    .review-form-group label { display: block; font-size: 0.88rem; font-weight: 600; color: #555; margin-bottom: 5px; }
+    .review-form-group input,
+    .review-form-group select,
+    .review-form-group textarea {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid #e0e0e0; border-radius: 10px;
+      font-size: 0.93rem; font-family: inherit;
+      direction: rtl; outline: none; transition: border .2s;
+      background: #fdfaf6;
+    }
+    .review-form-group input:focus,
+    .review-form-group select:focus,
+    .review-form-group textarea:focus { border-color: #e07b39; background: #fff; }
+    .review-form-group textarea { resize: none; height: 100px; }
+    .submit-review-btn {
+      width: 100%; padding: 13px;
+      background: #e07b39; color: white;
+      border: none; border-radius: 30px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background .2s; margin-top: 6px;
+    }
+    .submit-review-btn:hover { background: #c4622a; }
+    .no-rating-msg { color: #e07b39; font-size: 0.85rem; margin-bottom: 8px; display: none; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      max-width: 460px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: popIn .25s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    .modal .close-btn {
+      position: absolute; top: 14px; left: 18px;
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: #aaa;
+    }
+    .modal .close-btn:hover { color: #e07b39; }
+    .modal h3 { font-size: 1.5rem; font-weight: 800; color: #2d2d2d; margin-bottom: 8px; }
+    .modal .modal-pkg { font-size: 1rem; color: #e07b39; font-weight: 700; margin-bottom: 20px; }
+    .modal label { display: block; text-align: right; font-size: 0.9rem; color: #555; margin-bottom: 5px; font-weight: 600; }
+    .modal input, .modal select, .modal textarea {
+      width: 100%; padding: 10px 14px; border: 1.5px solid #e0e0e0;
+      border-radius: 10px; font-size: 0.95rem; margin-bottom: 14px;
+      font-family: inherit; direction: rtl; outline: none; transition: border .2s;
+    }
+    .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: #e07b39; }
+    .modal textarea { resize: none; height: 80px; }
+    .modal .submit-btn {
+      width: 100%; padding: 13px; background: #e07b39; color: white;
+      border: none; border-radius: 30px; font-size: 1.05rem; font-weight: 700;
+      cursor: pointer; transition: background .2s; margin-top: 4px;
+    }
+    .modal .submit-btn:hover { background: #c4622a; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #2d2d2d; color: #fff;
+      padding: 14px 28px; border-radius: 30px; font-size: 1rem; font-weight: 600;
+      z-index: 9999; opacity: 0; transition: all .4s ease; white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* FONT SIZE CONTROLS */
+    .font-controls {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #fff;
+      border-radius: 50px;
+      padding: 10px 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .font-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .font-btn.increase { background: #e07b39; color: white; font-size: 1.2rem; }
+    .font-btn.increase:hover { background: #c4622a; transform: scale(1.1); }
+    .font-btn.decrease { background: #f3f3f3; color: #555; font-size: 1rem; }
+    .font-btn.decrease:hover { background: #e0e0e0; transform: scale(1.1); }
+    .font-btn.reset { background: #f3f3f3; color: #888; font-size: 0.65rem; font-weight: 700; }
+    .font-btn.reset:hover { background: #e0e0e0; transform: scale(1.1); }
+    .font-size-label {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #aaa;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 700px) {
+      .font-controls { left: 10px; padding: 8px 6px; }
+      .font-btn { width: 34px; height: 34px; }
+    }
+      .hero h1 { font-size: 2rem; }
+      nav ul { display: none; }
+      .stats { gap: 24px; flex-wrap: wrap; }
+      .steps { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- FONT SIZE CONTROLS -->
+<div class="font-controls">
+  <button class="font-btn increase" onclick="changeFontSize(1)" title="تكبير الخط">A+</button>
+  <div class="font-size-label" id="fontLabel">100%</div>
+  <button class="font-btn decrease" onclick="changeFontSize(-1)" title="تصغير الخط">A-</button>
+  <button class="font-btn reset" onclick="resetFontSize()" title="إعادة الضبط">↺</button>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <div style="font-size:2.5rem; margin-bottom:10px;">🐾</div>
+    <h3>احجز إقامتك الآن</h3>
+    <p class="modal-pkg" id="modalPkgName">الحزمة المميزة</p>
+    <label>اسمك الكريم</label>
+    <input type="text" id="ownerName" placeholder="مثال: محمد أحمد" />
+    <label>رقم الهاتف</label>
+    <input type="tel" id="ownerPhone" placeholder="+962 79 XXX XXXX" />
+    <label>نوع الحيوان الأليف</label>
+    <select id="petType">
+      <option value="">-- اختر --</option>
+      <option value="كلب">كلب 🐕</option>
+      <option value="قطة">قطة 🐈</option>
+      <option value="أخرى">أخرى</option>
+    </select>
+    <label>ملاحظات إضافية (اختياري)</label>
+    <textarea id="bookingNotes" placeholder="أي تفاصيل تريد إضافتها..."></textarea>
+    <button class="submit-btn" onclick="submitBooking()">✅ تأكيد الحجز</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🐾 <span>فندق</span> loving homes</div>
+  <ul>
+    <li><a href="#amenities">المرافق</a></li>
+    <li><a href="#packages">الحزم</a></li>
+    <li><a href="#how">كيف يعمل</a></li>
+    <li><a href="#contact">تواصل معنا</a></li>
+    <li><a href="#reviews">التقييمات</a></li>
+  </ul>
+  <button class="btn-book" onclick="openModal('احجز الآن')">احجز الآن</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-emojis">🐕 🐈 🏨</div>
+  <h1>حيث يعيش حيوانك الأليف<br/><span>بأفضل رعاية ممكنة</span></h1>
+  <p>نوفر بيئة آمنة ومريحة لحيوانك الأليف مع خدمات متكاملة تضمن سعادته وصحته على مدار الساعة.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="openModal('احجز إقامتك الآن')">احجز إقامتك الآن</button>
+    <button class="btn-secondary" onclick="scrollToPackages()">تعرف على حزمنا</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="num">٢٤/٧</div><div class="label">خدمات بيطرية متاحة</div></div>
+  <div class="stat"><div class="num">١٠٠+</div><div class="label">حيوان أليف سعيد</div></div>
+  <div class="stat"><div class="num">٣</div><div class="label">حزم مخصصة</div></div>
+  <div class="stat"><div class="num">٥ ⭐</div><div class="label">تقييم العملاء</div></div>
+</div>
+
+<!-- AMENITIES -->
+<div id="amenities">
+  <div class="section">
+    <div class="section-title">
+      <h2>المرافق المقدمة</h2>
+      <p>كل ما يحتاجه حيوانك الأليف لإقامة مريحة ومبهجة</p>
+      <div class="line"></div>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity-card"><div class="icon">✂️</div><h3>صالة للحلاقة والمتعة</h3><p>خدمات تجميل وعناية متكاملة</p></div>
+      <div class="amenity-card"><div class="icon">❄️</div><h3>تبريد تحت الأرضية</h3><p>غرف مجهزة بتلفزيون وتبريد مريح</p></div>
+      <div class="amenity-card"><div class="icon">🚗</div><h3>خدمة التوصيل</h3><p>نوصلك "من وإلى المكان" بكل سهولة</p></div>
+      <div class="amenity-card"><div class="icon">🌿</div><h3>مراعي خارجية آمنة</h3><p>مساحات خضراء محاطة بالأمان</p></div>
+      <div class="amenity-card"><div class="icon">🏥</div><h3>خدمات بيطرية ٢٤/٧</h3><p>طبيب بيطري متاح في أي وقت</p></div>
+      <div class="amenity-card"><div class="icon">👁️</div><h3>مراقبة الحيوانات الأليفة</h3><p>متابعة مستمرة لضمان سلامتها</p></div>
+      <div class="amenity-card"><div class="icon">🌲</div><h3>التنزه في الغابات</h3><p>جولات استكشافية في الطبيعة</p></div>
+      <div class="amenity-card"><div class="icon">🎾</div><h3>حظيرة لعب داخلية</h3><p>فضاء ترفيهي آمن للعب والنشاط</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div id="packages" class="packages-bg">
+  <div class="section-title">
+    <h2>الحزم المقدمة</h2>
+    <p>اختر ما يناسب حيوانك الأليف واحتياجاتك</p>
+    <div class="line"></div>
+  </div>
+
+  <div class="packages-grid">
+
+    <!-- PREMIUM -->
+    <div class="package-card featured">
+      <div class="badge">⭐ الأكثر شيوعاً</div>
+      <div class="pkg-icon">🌟</div>
+      <h3>المميزة</h3>
+      <p class="pkg-subtitle pkg-walks">المشي ٤ مرات/يومياً • ٤ أنشطة يومياً</p>
+      <ul class="pkg-features">
+        <li><span class="check">✔</span> مساحة عشب خاصة</li>
+        <li><span class="check">✔</span> تحديثات وصور يومية</li>
+        <li><span class="check">✔</span> مكافآت على النحو المتفق عليه</li>
+        <li><span class="check">✔</span> خدمات بيطرية ٢٤/٧</li>
+        <li><span class="check">✔</span> غرفة مع تلفزيون وتبريد</li>
+        <li><span class="check">✔</span> مراقبة مستمرة</li>
+      </ul>
+      <button class="pkg-btn orange" onclick="openModal('الحزمة المميزة 🌟')">احجز الحزمة المميزة</button>
+    </div>
+
+    <!-- CLASSIC -->
+    <div class="package-card">
+      <div class="pkg-icon">🐾</div>
+      <h3>الكلاسيكية</h3>
+      <p class="pkg-subtitle pkg-walks">المشي ٣ مرات/يومياً • ٣ أنشطة يومياً</p>
+      <ul class="pkg-features">
+        <li><span class="check">✔</span> حظيرة لعب داخلية</li>
+        <li><span class="check">✔</span> منطقة للاسترخاء</li>
+        <li><span class="check">✔</span> جلسة حلاقة وتنظيف</li>
+        <li><span class="check">✔</span> خدمات بيطرية ٢٤/٧</li>
+        <li><span class="check">✔</span> مراعي خارجية آمنة</li>
+        <li><span class="dash">—</span> تحديثات صور يومية</li>
+      </ul>
+      <button class="pkg-btn outline" onclick="openModal('الحزمة الكلاسيكية 🐾')">احجز الحزمة الكلاسيكية</button>
+    </div>
+
+    <!-- DAILY -->
+    <div class="package-card">
+      <div class="pkg-icon">☀️</div>
+      <h3>اليوم</h3>
+      <p class="pkg-subtitle pkg-walks">المشي مرتين/يومياً</p>
+      <ul class="pkg-features">
+        <li><span class="check">✔</span> منطقة لعب خارجية</li>
+        <li><span class="check">✔</span> مسار الرشاقة</li>
+        <li><span class="check">✔</span> حفر في الرمل</li>
+        <li><span class="check">✔</span> خدمات بيطرية ٢٤/٧</li>
+        <li><span class="dash">—</span> مساحة عشب خاصة</li>
+        <li><span class="dash">—</span> تحديثات صور يومية</li>
+      </ul>
+      <button class="pkg-btn outline" onclick="openModal('حزمة اليوم ☀️')">احجز حزمة اليوم</button>
+    </div>
+
+  </div>
+
+  <!-- SPECIAL NOTE -->
+  <div class="special-note" style="margin-top:32px;">
+    ⚠️ <strong>ملاحظة:</strong> تتوفر حزم مخصصة للكلاب ذات المتطلبات الإضافية أو للإقامات الطويلة. يرجى التواصل مع الشركة لترتيب أي حزم مخصصة.
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="how">
+  <div class="section">
+    <div class="section-title">
+      <h2>كيف يعمل الحجز؟</h2>
+      <p>خطوات بسيطة لإقامة مريحة لحيوانك الأليف</p>
+      <div class="line"></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">١</div>
+        <h4>اختر الحزمة</h4>
+        <p>حدد الحزمة المناسبة لاحتياجات حيوانك الأليف</p>
+      </div>
+      <div class="step-arrow" style="margin-top: 0; align-self: flex-start; margin-top: 18px;">←</div>
+      <div class="step">
+        <div class="step-num">٢</div>
+        <h4>تواصل معنا</h4>
+        <p>اتصل بنا أو أرسل رسالة لتأكيد الموعد والتفاصيل</p>
+      </div>
+      <div class="step-arrow" style="margin-top: 0; align-self: flex-start; margin-top: 18px;">←</div>
+      <div class="step">
+        <div class="step-num">٣</div>
+        <h4>خدمة التوصيل</h4>
+        <p>نصلك "من وإلى المكان" بكل راحة وأمان</p>
+      </div>
+      <div class="step-arrow" style="margin-top: 0; align-self: flex-start; margin-top: 18px;">←</div>
+      <div class="step">
+        <div class="step-num">٤</div>
+        <h4>استمتع بالراحة</h4>
+        <p>اطمئن وحيوانك في أفضل رعاية مع تحديثات يومية</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-bg">
+  <h2>تواصل معنا اليوم 🐾</h2>
+  <p>نحن هنا للإجابة على كل أسئلتك وترتيب إقامة مثالية لحيوانك الأليف</p>
+  <div class="contact-info">
+    <div class="contact-item"><span class="ci">📞</span> +962 79######</div>
+    <div class="contact-item"><span class="ci">✉️</span> loving homes</div>
+    <div class="contact-item"><span class="ci">📍</span> عمان . الاردن</div>
+    <div class="contact-item"><span class="ci">🕐</span> متاحون ٢٤ ساعة </div>
+  </div>
+  <button class="btn-book" style="font-size:1.1rem; padding: 14px 36px;" onclick="contactWhatsApp()">📲 تواصل الآن</button>
+</div>
+
+<!-- REVIEWS SECTION -->
+<div id="reviews" class="reviews-bg">
+  <div class="section-title">
+    <h2>آراء عملائنا ⭐</h2>
+    <p>ماذا يقول أصحاب الحيوانات الأليفة عن تجربتهم معنا</p>
+    <div class="line"></div>
+  </div>
+
+  <!-- RATING SUMMARY -->
+  <div class="rating-summary">
+    <div class="rating-big">
+      <div class="score" id="avgScore">4.9</div>
+      <div class="total-stars">★★★★★</div>
+      <div class="count" id="reviewCount">بناءً على ٣ آراء</div>
+    </div>
+    <div class="rating-bars">
+      <div class="bar-row">
+        <div class="bar-label">٥ ★</div>
+        <div class="bar-track"><div class="bar-fill" id="bar5" style="width:90%"></div></div>
+        <div class="bar-pct" id="pct5">90%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">٤ ★</div>
+        <div class="bar-track"><div class="bar-fill" id="bar4" style="width:7%"></div></div>
+        <div class="bar-pct" id="pct4">7%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">٣ ★</div>
+        <div class="bar-track"><div class="bar-fill" id="bar3" style="width:3%"></div></div>
+        <div class="bar-pct" id="pct3">3%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">٢ ★</div>
+        <div class="bar-track"><div class="bar-fill" id="bar2" style="width:0%"></div></div>
+        <div class="bar-pct" id="pct2">0%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">١ ★</div>
+        <div class="bar-track"><div class="bar-fill" id="bar1" style="width:0%"></div></div>
+        <div class="bar-pct" id="pct1">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW CARDS -->
+  <div class="reviews-grid" id="reviewsGrid">
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">ر</div>
+        <div class="review-info">
+          <h4>رنا الخالدي</h4>
+          <div class="review-pet">🐕 صاحبة كلب — الحزمة المميزة</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">تجربة رائعة من البداية للنهاية! كلبي ماكس كان سعيداً جداً وعادت الصور يومياً تثلج القلب. الفريق محترف ومتعاون، وخدمة التوصيل كانت ممتازة. أنصح بها بشدة!</div>
+      <div class="review-date">مارس ٢٠٢٥</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">أ</div>
+        <div class="review-info">
+          <h4>أحمد المصري</h4>
+          <div class="review-pet">🐈 صاحب قطة — الحزمة الكلاسيكية</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">ما توقعت أن قطتي لولو تأقلم بهالسرعة! المكان نظيف وآمن والطاقم لطيف جداً. خدمة بيطرية ٢٤/٧ أعطتني راحة بال كاملة خلال سفري.</div>
+      <div class="review-date">فبراير ٢٠٢٥</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">س</div>
+        <div class="review-info">
+          <h4>سارة عبدالله</h4>
+          <div class="review-pet">🐕 صاحبة كلب — حزمة اليوم</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">كلبي بادي رجع مبسوط ومنتعش! المشي اليومي والأنشطة أبهجته كثيراً. السعر مناسب جداً مقارنة بالجودة. بالتأكيد سأعود مرة أخرى.</div>
+      <div class="review-date">يناير ٢٠٢٥</div>
+    </div>
+
+  </div>
+
+  <!-- ADD REVIEW FORM -->
+  <div class="add-review-box">
+    <h3>🖊️ شارك تجربتك</h3>
+    <p class="sub">رأيك يساعدنا على التطوير ويساعد العملاء الجدد</p>
+
+    <div style="margin-bottom:18px;">
+      <div class="review-form-group" style="margin-bottom:6px;"><label>تقييمك</label></div>
+      <div class="star-picker" id="starPicker">
+        <input type="radio" name="stars" id="s5" value="5"><label for="s5">★</label>
+        <input type="radio" name="stars" id="s4" value="4"><label for="s4">★</label>
+        <input type="radio" name="stars" id="s3" value="3"><label for="s3">★</label>
+        <input type="radio" name="stars" id="s2" value="2"><label for="s2">★</label>
+        <input type="radio" name="stars" id="s1" value="1"><label for="s1">★</label>
+      </div>
+      <div class="no-rating-msg" id="noRatingMsg">⚠️ يرجى اختيار عدد النجوم</div>
+    </div>
+
+    <div class="review-form-row">
+      <div class="review-form-group">
+        <label>اسمك الكريم *</label>
+        <input type="text" id="reviewName" placeholder="مثال: محمد أحمد" />
+      </div>
+      <div class="review-form-group">
+        <label>نوع حيوانك الأليف</label>
+        <select id="reviewPet">
+          <option value="">-- اختر --</option>
+          <option value="كلب 🐕">كلب 🐕</option>
+          <option value="قطة 🐈">قطة 🐈</option>
+          <option value="أخرى">أخرى</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="review-form-group">
+      <label>الحزمة التي اخترتها</label>
+      <select id="reviewPkg">
+        <option value="">-- اختر --</option>
+        <option value="الحزمة المميزة 🌟">الحزمة المميزة 🌟</option>
+        <option value="الحزمة الكلاسيكية 🐾">الحزمة الكلاسيكية 🐾</option>
+        <option value="حزمة اليوم ☀️">حزمة اليوم ☀️</option>
+      </select>
+    </div>
+
+    <div class="review-form-group">
+      <label>رأيك وتجربتك *</label>
+      <textarea id="reviewText" placeholder="أخبرنا عن تجربتك مع فندق Loving Homes..."></textarea>
+    </div>
+
+    <button class="submit-review-btn" onclick="submitReview()">⭐ إرسال التقييم</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>فندق loving homes</span> — جميع الحقوق محفوظة 🐾 صُنع بحب لحيواناتنا الأليفة</p>
+</footer>
+
+<script>
+  // ─── MODAL ───────────────────────────────────────────────
+  function openModal(pkgName) {
+    document.getElementById('modalPkgName').textContent = pkgName || 'احجز الآن';
+    document.getElementById('bookingModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // clear previous inputs
+    document.getElementById('ownerName').value = '';
+    document.getElementById('ownerPhone').value = '';
+    document.getElementById('petType').value = '';
+    document.getElementById('bookingNotes').value = '';
+  }
+
+  function closeModal() {
+    document.getElementById('bookingModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close modal on overlay click
+  document.getElementById('bookingModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ─── SUBMIT BOOKING ──────────────────────────────────────
+  function submitBooking() {
+    const name  = document.getElementById('ownerName').value.trim();
+    const phone = document.getElementById('ownerPhone').value.trim();
+    const pet   = document.getElementById('petType').value;
+    const pkg   = document.getElementById('modalPkgName').textContent;
+
+    if (!name) { showToast('⚠️ يرجى إدخال اسمك'); return; }
+    if (!phone) { showToast('⚠️ يرجى إدخال رقم الهاتف'); return; }
+    if (!pet) { showToast('⚠️ يرجى اختيار نوع الحيوان الأليف'); return; }
+
+    closeModal();
+    showToast(`✅ تم استلام طلب حجزك في ${pkg}! سنتواصل معك قريباً 🐾`);
+  }
+
+  // ─── CONTACT WHATSAPP ────────────────────────────────────
+  function contactWhatsApp() {
+    const msg = encodeURIComponent('مرحباً، أريد الاستفسار عن خدمات فندق Loving Homes 🐾');
+    window.open('https://wa.me/96279000000?text=' + msg, '_blank');
+  }
+
+
+  // ─── FONT SIZE CONTROLS ──────────────────────────────────
+  let fontLevel = 0; // steps from base
+  const fontSteps = [70, 80, 90, 100, 110, 120, 130, 140, 150];
+  const baseIndex = 3; // 100% is index 3
+
+  function changeFontSize(dir) {
+    fontLevel = Math.max(-3, Math.min(5, fontLevel + dir));
+    applyFontSize();
+  }
+
+  function resetFontSize() {
+    fontLevel = 0;
+    applyFontSize();
+  }
+
+  function applyFontSize() {
+    const size = fontSteps[baseIndex + fontLevel];
+    document.documentElement.style.fontSize = size + '%';
+    document.getElementById('fontLabel').textContent = size + '%';
+  }
+
+  function scrollToPackages() {
+    document.getElementById('packages').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ─── REVIEWS ─────────────────────────────────────────────
+  // Initial data matches the 3 seeded cards
+  const reviewsData = [
+    { stars: 5 }, { stars: 5 }, { stars: 5 }
+  ];
+
+  function getSelectedStars() {
+    const checked = document.querySelector('input[name="stars"]:checked');
+    return checked ? parseInt(checked.value) : 0;
+  }
+
+  function starsHTML(n) {
+    return '★'.repeat(n) + '<span>' + '★'.repeat(5 - n) + '</span>';
+  }
+
+  function getInitials(name) {
+    return name.trim().charAt(0).toUpperCase();
+  }
+
+  function updateSummary() {
+    const total = reviewsData.length;
+    const sum = reviewsData.reduce((a, b) => a + b.stars, 0);
+    const avg = (sum / total).toFixed(1);
+    document.getElementById('avgScore').textContent = avg;
+    document.getElementById('reviewCount').textContent = 'بناءً على ' + total + ' آراء';
+
+    const counts = [0, 0, 0, 0, 0];
+    reviewsData.forEach(r => counts[r.stars - 1]++);
+    for (let i = 1; i <= 5; i++) {
+      const pct = total ? Math.round((counts[i-1] / total) * 100) : 0;
+      document.getElementById('bar' + i).style.width = pct + '%';
+      document.getElementById('pct' + i).textContent = pct + '%';
+    }
+  }
+
+  function submitReview() {
+    const stars = getSelectedStars();
+    const name = document.getElementById('reviewName').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+    const pet  = document.getElementById('reviewPet').value;
+    const pkg  = document.getElementById('reviewPkg').value;
+
+    if (!stars) {
+      document.getElementById('noRatingMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('noRatingMsg').style.display = 'none';
+    if (!name) { showToast('⚠️ يرجى إدخال اسمك'); return; }
+    if (!text)  { showToast('⚠️ يرجى كتابة رأيك'); return; }
+
+    // Build card
+    const starsRow = '★'.repeat(stars) + '<span style="color:#ccc">' + '★'.repeat(5 - stars) + '</span>';
+    const petLine  = pet ? `🐾 صاحب/ة ${pet}${pkg ? ' — ' + pkg : ''}` : (pkg ? pkg : '');
+    const now = new Date();
+    const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const dateStr = months[now.getMonth()] + ' ' + now.getFullYear();
+
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.style.animation = 'popIn .3s ease';
+    card.innerHTML = `
+      <div class="review-header">
+        <div class="review-avatar">${getInitials(name)}</div>
+        <div class="review-info">
+          <h4>${name}</h4>
+          ${petLine ? `<div class="review-pet">${petLine}</div>` : ''}
+        </div>
+      </div>
+      <div class="review-stars">${starsRow}</div>
+      <div class="review-text">${text}</div>
+      <div class="review-date">${dateStr}</div>
+    `;
+    document.getElementById('reviewsGrid').prepend(card);
+
+    // Update data & summary
+    reviewsData.push({ stars });
+    updateSummary();
+
+    // Reset form
+    document.getElementById('reviewName').value = '';
+    document.getElementById('reviewText').value = '';
+    document.getElementById('reviewPet').value  = '';
+    document.getElementById('reviewPkg').value  = '';
+    document.querySelectorAll('input[name="stars"]').forEach(r => r.checked = false);
+
+    showToast('✅ شكراً! تم نشر تقييمك بنجاح ⭐');
+    document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
+  }
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+</script>
+
+</body>
+</html>
